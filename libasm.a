@@ -1,0 +1,123 @@
+!<arch>
+ft_strcpy.s/    0           0     0     644     857       `
+section .text								;Init of program
+
+	global ft_strcpy						;Declaring ft_strcpy as global
+
+	ft_strcpy:								;Function
+		push rbp							;Save rbp on the top of stack
+		mov rbp, rsp						;Save pointer to the top of stack inside rbp
+
+		xor dl, dl							;Clean dl (8 bits)
+		xor rcx, rcx						;Clean rcx (counter)
+		cmp rsi, 0							;Compare if rsi(src) is NULL
+		jz return							;If is null, return
+
+		while:								;while:
+			mov dl, BYTE [rsi + rcx]		;Move src[i] to dl(aux)
+			mov BYTE [rdi + rcx], dl		;Move dl to dst[i]
+			cmp BYTE [rdi + rcx], 0			;Check if 0 exists
+			jz	return						;If it exist, return
+			inc rcx							;rcx (counter += 1)
+			jmp while						;Back to the loop
+
+		return:								;Return label
+			mov rsp, rbp					;restore stack
+			pop rbp							;restore stack
+			mov rax, rdi					;Move to rax the whole source
+			ret								;Return
+ft_read.s/      0           0     0     644     141       `
+section .text
+
+global ft_read				;Set function as global
+
+	ft_read:	mov rax, 0	;Set as input
+				syscall		;Syscall
+				ret			;Return function
+ft_strdup.s/    0           0     0     644     399       `
+section .text
+
+global ft_strdup
+extern ft_strlen
+extern malloc
+
+	ft_strdup:
+				xor rcx, rcx
+				xor rdx, rdx
+				xor r8, r8
+				cmp rdi, 0
+				je	exit
+				call ft_strlen
+				add	rcx, rax
+				mov rdi, QWORD [rax + 1]
+				call malloc
+				cmp rax, 0
+				je	exit
+		while:
+				cmp r8, rcx
+				jle	assign
+				ret
+		assign:
+				mov rax, BYTE [rdi + r8]
+				inc	r8
+				jmp while
+
+		exit:	mov rax, 0
+				ret
+ft_strlen.s/    0           0     0     644     611       `
+section .text									;Init program
+
+	global ft_strlen						;Declare subroutine for using in main
+
+	ft_strlen:									;name of subroutine
+		push rbp								;saving stack
+		mov rbp, rsp							;saving stack
+
+		mov rax, 0								;init rax to 0
+		while:									;loop label
+			cmp byte [rdi + rax], byte 0		;Check if char is null
+			je end								;Jump to end when the value of [rdi + rax] is null
+			inc rax								;Increment len, len+=1
+			jmp while							;loop jump
+		end:									;End label
+		mov rsp, rbp							;Restore stack
+		pop rbp									;Restore stack
+
+		ret										;Return the control of the program
+ft_strcmp.s/    0           0     0     644     396       `
+section .text
+
+global ft_strcmp
+
+	ft_strcmp:
+				xor rcx, rcx
+				xor rdx, rdx
+				cmp rsi, 0
+				jz	null
+				cmp rdi, 0
+				jz	null
+
+				while:
+				mov dl, BYTE [rdi + rcx]
+				cmp dl, BYTE [rsi + rcx]
+				jne calculate
+				inc rcx
+				jmp while
+
+	null:		cmp rsi, rdi
+				mov rax, rsi
+				sub	rax, BYTE [rdi]
+				ret
+
+	calculate:	mov dh, BYTE [rsi + rcx]
+				sub	dh, dl
+				movsx rax, dh
+				retft_write.s/     0           0     0     644     160       `
+section .text
+
+global ft_write		;Use function as global
+
+	ft_write:		;Name of the function
+		mov rax, 1	;Set output
+		syscall		;Syscall
+		ret			;Return function
