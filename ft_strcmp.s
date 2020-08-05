@@ -10,16 +10,21 @@ global ft_strcmp
 				cmp rsi, 0					;If s2 == NULL
 				jz exit						;Exit
 
-	compare:	mov dl, BYTE[rdi + rcx]		;Move s1[i] to dl
-				mov dh, BYTE[rsi + rcx]		;Move s2[i] to dh
-				cmp dl, 0					;If s1[i] == NULL
-				je	calculate				;Jump to calculate
-				cmp dh, 0					;If s2[i] == NULL
-				je	calculate				;Jump to calculate
+	compare:
+				mov al, BYTE[rdi + rcx]		;Move s1[i] to dl
+				mov dl, BYTE[rsi + rcx]		;Move s2[i] to dh
+				cmp al, 0
+				jz	greater
+				cmp	dl, 0
+				jz	greater
+				cmp al, dl					;If s1[i] == NULL
+				jg	greater
+				jl	less				;Jump to calculate
 				inc rcx						;i++
 				jmp compare					;Loop
 
-	calculate:	sub dl, dh					;If exist different value, s1[i] - s2[i]
+	less:		neg rax
+				neg al
 
-	exit:		movsx rax, dl				;Move to raw with sign
-				ret							;Return control to main function
+	greater:	sub al, dl
+	exit:		ret

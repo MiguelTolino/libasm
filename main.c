@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 12:16:30 by mmateo-t          #+#    #+#             */
-/*   Updated: 2020/08/05 14:03:12 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/05 20:52:47 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ int main(void)
 	char *str1;
 	char *str2;
 
-	str1 = "HOLA2";
-	str2 = "HOLA1";
-
+	str1 = "Xaxo";
+	str2 = "xaxo";
 
 	len = ft_strlen(str1);
 	printf("%i\n", len);
 	printf("STRCOMPARE: %i\n", ft_strcmp(str1, str2));
-	printf("STRDUP : %s", ft_strdup("HOLA"));
-	printf("%s\n", ft_strcpy(str2, str1));
+	printf("STRCOMPAREB: %i\n", strcmp(str1, str2));
+//	printf("STRDUP : %s", ft_strdup("HOLA"));
+//	printf("%s\n", ft_strcpy(str2, str1));
+//	printf("%s\n", ft_strcpy(str2, "HOLA"));
 }

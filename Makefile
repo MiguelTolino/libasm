@@ -6,7 +6,7 @@
 #    By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/29 19:39:26 by mmateo-t          #+#    #+#              #
-#    Updated: 2020/08/05 14:15:22 by mmateo-t         ###   ########.fr        #
+#    Updated: 2020/08/05 18:13:03 by mmateo-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS:= $(wildcard *.s)
 OBJS = ${SRCS:.s=.o}
 FILE:= main.c
 CC:= gcc
-CFLAGS:= -Wall -Werror -Wextra -L. -fPIE
+CFLAGS:= -Wall -Werror -Wextra
 ASM:= nasm -felf64
 ASM_FLAGS:= -felf64
 RM:= rm -f
@@ -46,7 +46,7 @@ ${NAME}: $(OBJS)
 	@echo "\033[0m"
 
 test:	all
-		$(CC) $(CFLAGS) $(FILE) libasm.a -o $(TEST)	#FIXME make test recompile
+		$(CC) -no-pie $(FILE) -o $(TEST) -L. -lasm
 		$(MSG) "$(LCYAN)Ready to test your libasm"
 		$(MSG) "$(YELLOW)-------------------------"
 		$(MSG) "$(LGREEN)./test $(REM)"

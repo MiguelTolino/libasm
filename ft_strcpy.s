@@ -4,12 +4,12 @@ global ft_strcpy
 
 	ft_strcpy:	cmp rsi, 0					;src == NULL??
 				jz	return					;If it is, go to return
+				xor rax, rax				;Clean RAX register
 				xor rcx, rcx				;Clean RCX register
-				xor rdx, rdx				;Clean RDX register
 
-		copy:	mov dl, BYTE [rsi + rcx]	;Move to dl, src[i]
-				mov BYTE [rdi + rcx], dl	;Move to dst[i], dl
-				cmp dl, 0					;Check if src[i] == NULL
+		copy:	mov al, BYTE [rsi + rcx]	;Move to dl, src[i]
+				mov BYTE [rdi + rcx], al	;Move to dst[i], dl
+				cmp al, 0					;Check if src[i] == NULL
 				jz	return					;Return
 				inc	rcx						;i++
 				jmp	copy					;Loop

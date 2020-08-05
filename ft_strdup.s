@@ -3,6 +3,7 @@ section .text
 global ft_strdup
 extern	ft_strlen
 extern 	malloc
+extern	___error
 
 	ft_strdup:
 				xor rdx, rdx
