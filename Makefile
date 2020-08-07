@@ -6,7 +6,7 @@
 #    By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/29 19:39:26 by mmateo-t          #+#    #+#              #
-#    Updated: 2020/08/05 18:13:03 by mmateo-t         ###   ########.fr        #
+#    Updated: 2020/08/07 01:23:57 by mmateo-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,9 +52,8 @@ test:	all
 		$(MSG) "$(LGREEN)./test $(REM)"
 
 clean:
-		$(MSG) "REMOVED FILES"
-		$(MSG) "-------------"
-		$(MSG) "$(RED) $(OBJS)$(REM)"
+		$(MSG) "$(RED)REMOVING FILES..."
+		$(MSG) "$(OBJS)$(REM)"
 		@$(RM) $(OBJS)
 
 fclean: clean
