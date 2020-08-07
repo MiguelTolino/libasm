@@ -6,19 +6,18 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 12:16:30 by mmateo-t          #+#    #+#             */
-/*   Updated: 2020/08/07 18:55:06 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/07 20:37:37 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 
-
-void clean_buffer(char buff[100])
+void clean_buffer(char buff[50])
 {
 	int i;
 
 	i = 0;
-	while (i <  100)
+	while (i <  50)
 	{
 		buff[i++] = 0;
 	}
@@ -27,7 +26,7 @@ void clean_buffer(char buff[100])
 int test_ft_write()
 {
 	int fd;
-	char buff[100];
+	char buff[50];
 	int count;
 	char c;
 	int n_bytes[2];
@@ -36,17 +35,24 @@ int test_ft_write()
 	fd = 1;
 	count = 0;
 	c = 50;
-	while (count < 20)
+	while (count < 7)
 	{
-		TEST(count, 20);
+		TEST(count, 7);
+		write(1, "\n", 1);
 		buff[count++] = c++;
-		write(fd, "ft_write: ", 11);
+		ft_write(fd, "ft_write: ", 11);
 		n_bytes[0] = ft_write(fd, buff, count);
 		printf("\n");
 		write(fd, "write:    ", 11);
 		n_bytes[1] = write(fd, buff, count);
-		printf("\n\n");
-		assert(n_bytes[0] == n_bytes[1]);
+		if (n_bytes[0] == n_bytes[1])
+		{
+			OK;
+		}
+		else
+		{
+			FAIL;
+		}
 	}
 	return (1);
 }
@@ -54,7 +60,7 @@ int test_ft_write()
 int test_ft_read()
 {
 	int fd[2];
-	char buff[100];
+	char buff[50];
 	int count;
 	char c;
 	int n_bytes[2];
@@ -64,13 +70,14 @@ int test_ft_read()
 	fd[1] = open("Makefile", O_RDONLY);
 
 	count = 0;
-	while (count < 20)
+	while (count < 7)
 	{
-		TEST(count, 20);
 		n_bytes[0] = ft_read(fd[0], buff, count);
-		printf("ft_read: %s\n", buff);
+		printf("ft_read: %s", buff);
+		TEST(count, 7);
+		printf("\n");
 		n_bytes[1] = read(fd[1], buff, count);
-		printf("read:    %s", buff);
+		printf("read:    %s\t", buff);
 		if (n_bytes[0] == n_bytes[1])
 		{
 			OK;
@@ -81,39 +88,40 @@ int test_ft_read()
 			assert(n_bytes[0] == n_bytes[1]);
 		}
 		count++;
+		printf("\n");
 	}
 	close(fd[0]);
 	close(fd[1]);
 	return (1);
 }
 
-int	test_ft_strlen(char buff[100])
+int	test_ft_strlen()
 {
 	int i;
 	char c;
 	int a;
 	int b;
+	char buff[50];
 
+	clean_buffer(buff);
 	i = 0;
-	c = 32;
-	while (i < 50)
+	while (i < 30)
 	{
 		a = ft_strlen(buff);
 		b = strlen(buff);
-		buff[i] = c++;
+		c = rand() % 80 + 30;
+		buff[i] = c;
 		printf("ft_strlen: \033[0;33m%i\033[0;0m", a);
 		printf(" ------ strlen: \033[0;33m%i\033[0;0m", b);
 		if (a == b)
 		{
-			printf("\t \033[1;32m[OK]\t(%i / 50)\033[0;0m\n", (i + 1));
+			TEST(i, 30);
+			OK;
 		}
 		else
 		{
-			printf("\t \033[1;31m[FAIL]\t (%i / 50)\033[0;0m\n", (i + 1));
+			printf("\t \033[1;31m[FAIL]\t\033[0;0m\n");
 		}
-		assert(a == b);
-		if (c > 126)
-			c = 32;
 		i++;
 	}
 	return (1);
@@ -121,40 +129,35 @@ int	test_ft_strlen(char buff[100])
 
 int test_ft_strcpy()
 {
-	char buff[100];
+	char buff[50];
 	char *s1;
 	char *s2;
 	int i;
-	char c;
 	int equal;
 
-	c = 32;
-	s2 = calloc(51, sizeof(char));
-	s1 = calloc(51, sizeof(char));
+	s2 = calloc(31, sizeof(char));
+	s1 = calloc(31, sizeof(char));
 	i = 0;
 	clean_buffer(buff);
-	while (i < 50)
+	while (i < 20)
 	{
-		buff[i] = c;
 		s1 = strcpy(s1, buff);
 		equal = strcmp(ft_strcpy(s2, buff), s1);
+		printf("ft_strcpy: %s\n", s2);
+		printf("strcpy:    %s", s1);
+		buff[i] = rand() % 81 + 30;;
+
 		if (!equal)
 		{
-			printf("\033[1;32mTest (%i / 50)\t[OK]\033[0;0m\n", i + 1);
-			printf("SRC:       %s\n", buff);
-			printf("ft_strcpy: %s\n", s2);
-			printf("strcpy:    %s\n", s1);
+			TEST(i, 20);
+			OK;
+			printf("\n");
 		}
 		else
 		{
-			printf("%sTest (%i / 50)\tft_strcpy	[FAIL]\n%s", RED, i + 1, NOCOLOR);
-			printf("SRC:       %s\n", buff);
-			printf("ft_strcpy: %s\n", s2);
-			printf("strcpy:    %s\n", s1);
+			FAIL;
 		}
 		i++;
-		c++;
-		assert(!equal);
 	}
 	free(s2);
 	free(s1);
@@ -163,8 +166,8 @@ int test_ft_strcpy()
 
 int test_ft_strcmp()
 {
-	char s1[100];
-	char s2[100];
+	char s1[50];
+	char s2[50];
 	char c1;
 	char c2;
 	int i;
@@ -182,17 +185,16 @@ int test_ft_strcmp()
 	{
 		s1[i] = c1;
 		s2[i] = c1++;
+		printf("ft_strcmp: %s%i%s", YELLOW, equal1, NOCOLOR);
+		printf(" ----- strcmp: %s%i%s\t", YELLOW, equal2, NOCOLOR);
 		if (equal1 == equal2)
 		{
-			printf("ft_strcmp: %s%i%s", YELLOW, equal1, NOCOLOR);
-			printf(" ----- strcmp: %s%i%s\t", YELLOW, equal2, NOCOLOR);
-			printf("\033[1;32mTest (%i / 20)\t[OK]\033[0;0m\n", i + 1);
+			TEST(i, 20);
+			OK;
 		}
 		else
 		{
-			printf("ft_strcmp: %s%i%s", YELLOW, equal1, NOCOLOR);
-			printf(" ----- strcmp: %s%i%s\t", YELLOW, equal1, NOCOLOR);
-			printf("\033[1;31mTest (%i / 20)\t[FAIL]\033[0;0m\n", i + 1);
+			FAIL;
 		}
 		assert(equal1 == equal2);
 		i++;
@@ -212,18 +214,16 @@ int test_ft_strcmp()
 			s2[j] = c2;
 			j++;
 		}
+		printf("ft_strcmp: %s%3i%s", YELLOW, equal1, NOCOLOR);
+		printf(" ----- strcmp: %s%3i%s", YELLOW, equal2, NOCOLOR);
 		if ((equal1 = ft_strcmp(s1, s2)) == (equal2 = strcmp(s1, s2)))
 		{
-			printf("ft_strcmp:%s%3i%s", YELLOW, equal1, NOCOLOR);
-			printf(" ----- strcmp:%s%3i%s\t", YELLOW, equal2, NOCOLOR);
-			printf("\033[1;32mTest (%i / 20)\t[OK]\033[0;0m\n", i + 1);
-
+			TEST(i, 20);
+			OK;
 		}
 		else
 		{
-			printf("ft_strcmp:|%s| %s%3i%s", s1,YELLOW, equal1, NOCOLOR);
-			printf(" ----- strcmp:|%s| %s%3i%s\t",s2, YELLOW, equal2, NOCOLOR);
-			printf("\033[1;31mTest (%i / 20)\t[FAIL]\033[0;0m\n", i + 1);
+			FAIL;
 		}
 		assert(equal1 == equal2);
 		i++;
@@ -244,12 +244,11 @@ int test_ft_strdup()
 	s1 = calloc(30, sizeof(char));
 	while (i < 20)
 	{
-		TEST(i, 20);
-		c = rand() % 81 + 30;
-		s1[i] = c;
+		s1[i] = rand() % 81 + 30;
 		s2 = ft_strdup(s1);
-		printf("ft_strdup: %s\n", s2);
-		printf("strdup:    %s\t", s1);
+		printf("\nft_strdup: %s", s2);
+		TEST(i, 20);
+		printf("\nstrdup:    %s\t", s1);
 		if (!strcmp(s1, s2))
 		{
 			OK;
@@ -261,22 +260,19 @@ int test_ft_strdup()
 		}
 		i++;
 	}
-
-
+	return (1);
 }
 
 int main(void)
 {
-	char buff[100];
-
-	clean_buffer(buff);
-	if (test_ft_strlen(buff))
+	if (test_ft_strlen())
 		printf("\033[1;32mFT_STRLEN [OK]\033[0;0m\n\n");
+
 	if (test_ft_strcpy())
 	{
 		printf("\033[1;32mFT_STRCPY [OK]\033[0;0m\n\n");
 	}
- 	if (test_ft_strcmp())
+	if (test_ft_strcmp())
 	{
 		printf("\033[1;32mFT_STRCMP [OK]\033[0;0m\n\n");
 	}
@@ -286,11 +282,5 @@ int main(void)
 	}
 	test_ft_write();
 	test_ft_read();
-
-	char *s1 = "HOLA";
-	char *s2;
-
-	s2 = ft_strdup(s1);
-	printf("%s", s2);
 
 }
