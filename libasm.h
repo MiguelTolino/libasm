@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:28:14 by lmartin           #+#    #+#             */
-/*   Updated: 2020/08/07 20:13:53 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:41:14 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define RED		"\033[1;31m"
 #define GREEN	"\033[1;32m"
 #define YELLOW	"\033[0;33m"
+#define BLUE	"\033[0;34m"
 #define TEST(x, y)	printf("\t\033[1;33mTest (%i / %i)\033[0;0m\t", x + 1, y);
 #define OK		printf("\t%s[OK]\033[0;0m\n", GREEN);
 #define FAIL	printf("\t%s[FAIL]\033[0;0m\n", RED);

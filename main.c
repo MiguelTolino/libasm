@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 12:16:30 by mmateo-t          #+#    #+#             */
-/*   Updated: 2020/08/07 20:37:37 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/08 14:56:33 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int test_ft_write()
 		TEST(count, 7);
 		write(1, "\n", 1);
 		buff[count++] = c++;
-		ft_write(fd, "ft_write: ", 11);
+		write(fd, "ft_write: ", 11);
 		n_bytes[0] = ft_write(fd, buff, count);
-		printf("\n");
+		write(1, "\n", 1);
 		write(fd, "write:    ", 11);
 		n_bytes[1] = write(fd, buff, count);
 		if (n_bytes[0] == n_bytes[1])
@@ -52,8 +52,10 @@ int test_ft_write()
 		else
 		{
 			FAIL;
+			assert(1);
 		}
 	}
+	printf("\n\n");
 	return (1);
 }
 
@@ -121,6 +123,7 @@ int	test_ft_strlen()
 		else
 		{
 			printf("\t \033[1;31m[FAIL]\t\033[0;0m\n");
+			assert(1);
 		}
 		i++;
 	}
@@ -156,6 +159,7 @@ int test_ft_strcpy()
 		else
 		{
 			FAIL;
+			assert(1);
 		}
 		i++;
 	}
@@ -174,7 +178,7 @@ int test_ft_strcmp()
 	int equal1;
 	int equal2;
 
-	c1 = 50;
+	c1 = rand() % 81 + 30;
 	i = 0;
 	clean_buffer(s1);
 	clean_buffer(s2);
@@ -265,22 +269,20 @@ int test_ft_strdup()
 
 int main(void)
 {
-	if (test_ft_strlen())
-		printf("\033[1;32mFT_STRLEN [OK]\033[0;0m\n\n");
-
-	if (test_ft_strcpy())
-	{
-		printf("\033[1;32mFT_STRCPY [OK]\033[0;0m\n\n");
-	}
-	if (test_ft_strcmp())
-	{
-		printf("\033[1;32mFT_STRCMP [OK]\033[0;0m\n\n");
-	}
-	if (test_ft_strdup())
-	{
-		printf("\033[1;32mFT_STRDUP [OK]\033[0;0m\n\n");
-	}
+	test_ft_strlen();
+	test_ft_strcpy();
+	test_ft_strcmp();
+	test_ft_strdup();
 	test_ft_write();
 	test_ft_read();
 
+	printf("\n\n%sRESULTS%s", BLUE, NOCOLOR);
+	printf("\n%s--------------------------------%s\n", BLUE, NOCOLOR);
+	printf("\033[1;32mFT_STRLEN [OK]\033[0;0m\n");
+	printf("\033[1;32mFT_STRCPY [OK]\033[0;0m\n");
+	printf("\033[1;32mFT_STRCMP [OK]\033[0;0m\n");
+	printf("\033[1;32mFT_STRDUP [OK]\033[0;0m\n");
+	printf("\033[1;32mFT_WRITE [OK]\033[0;0m\n");
+	printf("\033[1;32mFT_READ [OK]\033[0;0m\n");
+	printf("%s----------------------------------%s\n", BLUE, NOCOLOR);
 }
