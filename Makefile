@@ -6,7 +6,7 @@
 #    By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/29 19:39:26 by mmateo-t          #+#    #+#              #
-#    Updated: 2020/08/07 19:19:47 by mmateo-t         ###   ########.fr        #
+#    Updated: 2020/08/09 17:00:02 by mmateo-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ ${NAME}: $(OBJS)
 	@echo "\033[0m"
 
 test:	all
-		$(CC) -no-pie $(FILE) -o $(TEST) -L. -lasm
+		$(CC) $(CFLAGS) -no-pie $(FILE) -o $(TEST) -L. -lasm
 		$(MSG) "$(LCYAN)Ready to test your libasm"
 		$(MSG) "$(YELLOW)-------------------------"
 		$(MSG) "$(LGREEN)./test $(REM)"
