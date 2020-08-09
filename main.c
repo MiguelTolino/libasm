@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 12:16:30 by mmateo-t          #+#    #+#             */
-/*   Updated: 2020/08/09 17:01:10 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:20:14 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,8 @@ int			test_ft_strcmp(void)
 		else
 		{
 			FAIL;
+			assert(equal1 == equal2);
 		}
-		assert(equal1 == equal2);
 		i++;
 	}
 	i = 0;
@@ -203,13 +203,15 @@ int			test_ft_strcmp(void)
 		j = 0;
 		while (j < 10)
 		{
-			s1[j] = rand() % 81 + 30;
-			s2[j] = rand() % 81 + 30;
+			s1[j] = rand() % 81 + 35;
+			s2[j] = rand() % 81 + 35;
 			j++;
 		}
+		equal1 = ft_strcmp(s1, s2);
+		equal2 = strcmp(s1, s2);
 		printf("ft_strcmp: %s%3i%s", YELLOW, equal1, NOCOLOR);
 		printf(" ----- strcmp: %s%3i%s", YELLOW, equal2, NOCOLOR);
-		if ((equal1 = ft_strcmp(s1, s2)) == (equal2 = strcmp(s1, s2)))
+		if (equal1 == equal2)
 		{
 			TEST(i, 20);
 			OK;
@@ -218,7 +220,6 @@ int			test_ft_strcmp(void)
 		{
 			FAIL;
 		}
-		assert(equal1 == equal2);
 		i++;
 	}
 	return (1);
@@ -249,7 +250,9 @@ int			test_ft_strdup(void)
 			assert(1);
 		}
 		i++;
+		free(s2);
 	}
+	free(s1);
 	return (1);
 }
 
