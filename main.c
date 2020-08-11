@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 12:16:30 by mmateo-t          #+#    #+#             */
-/*   Updated: 2020/08/09 17:20:14 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/11 20:49:45 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int			test_ft_read(void)
 	while (count < 7)
 	{
 		n_bytes[0] = ft_read(fd[0], buff, count);
-		printf("ft_read: %s", buff);
+		printf("ft_read: %s (%i)", buff, n_bytes[0]);
 		TEST(count, 7);
 		printf("\n");
 		n_bytes[1] = read(fd[1], buff, count);
-		printf("read:    %s\t", buff);
+		printf("read:    %s\t (%i)", buff, n_bytes[1]);
 		if (n_bytes[0] == n_bytes[1])
 		{
 			OK;
@@ -233,6 +233,12 @@ int			test_ft_strdup(void)
 
 	i = 0;
 	s1 = calloc(30, sizeof(char));
+	s2 = ft_strdup(s1);
+	printf("\nft_strdup: %s", s2);
+	TEST(-1, 20);
+	printf("\nstrdup:    %s", s1);
+	OK;
+	free(s2);
 	while (i < 20)
 	{
 		s1[i] = rand() % 81 + 30;

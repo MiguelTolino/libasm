@@ -7,11 +7,6 @@ section .text
 				mov	rax, 0				; initialize rax (return variable)
 				mov	rcx, 0				; initialize rcx (counter)
 				mov rdx, 0				;initialize	rdx (aux)
-
-				cmp rdi, 0				;s1 == NULL?
-				jz exit					;return
-				cmp rsi, 0				;s2 == NULL?
-				jz exit					;return
 	compare:
 				mov al, BYTE[rdi + rcx]	;al = s1[i]
 				mov dl, BYTE[rsi + rcx]	;dl = s2[i]
