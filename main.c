@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 12:16:30 by mmateo-t          #+#    #+#             */
-/*   Updated: 2020/08/11 20:49:45 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/17 12:41:24 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,11 +234,6 @@ int			test_ft_strdup(void)
 	i = 0;
 	s1 = calloc(30, sizeof(char));
 	s2 = ft_strdup(s1);
-	printf("\nft_strdup: %s", s2);
-	TEST(-1, 20);
-	printf("\nstrdup:    %s", s1);
-	OK;
-	free(s2);
 	while (i < 20)
 	{
 		s1[i] = rand() % 81 + 30;

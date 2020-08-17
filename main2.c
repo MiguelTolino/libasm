@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:25:43 by lmartin           #+#    #+#             */
-/*   Updated: 2020/08/11 20:35:57 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2020/08/17 12:09:25 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		test_ft_read()
 	fd = open("dontexist", O_RDONLY);
 	ret = read(fd, buffer, 10);
 	printf("		\x1b[33m<unistd.h>\x1b[0m  %zd - %s\n", ret, strncpy(show, buffer, 10));
+	perror("ERRNO: ");
 	close(fd);
 	fd = open("dontexist", O_RDONLY);
 	ret = read(fd, buffer, 10);
@@ -72,6 +73,7 @@ void		test_ft_read()
 	fd = open("testlib.c", O_RDONLY);
 	ret = read(fd, NULL, 10);
 	printf("		\x1b[33m<libasm.h>\x1b[0m  %zd\n", ret);
+	perror("ERRNO: ");
 	close(fd);
 	printf("	\x1b[34m[5]\x1b[0m \x1b[36m'42' '' '10'\x1b[0m\n");
 	ret = read(42, buffer, 10);
@@ -110,6 +112,7 @@ void		test_ft_write()
 	printf("	\x1b[34m[5]\x1b[0m \x1b[36m'1' 'NULL' '6'\x1b[0m\n");
 	printf("		\x1b[33m<unistd.h>\x1b[0m  %zd\n", write(1, NULL, 6));
 	printf("		\x1b[33m<libasm.h>\x1b[0m  %zd\n", ft_write(1, NULL, 6));
+	perror("ERRNO: ");
 	printf("	\x1b[34m[6]\x1b[0m \x1b[36m'0' 'toto' '4'\x1b[0m\n");
 	printf("		\x1b[33m<unistd.h>\x1b[0m  %zd\n", write(0, "toto", 4));
 	printf("		\x1b[33m<libasm.h>\x1b[0m  %zd\n", ft_write(0, "toto", 4));
@@ -119,6 +122,7 @@ void		test_ft_write()
 	printf("	\x1b[34m[8]\x1b[0m \x1b[36m'-1' 'toto' '4'\x1b[0m\n");
 	printf("		\x1b[33m<unistd.h>\x1b[0m  %zd\n", write(-1, "toto", 4));
 	printf("		\x1b[33m<libasm.h>\x1b[0m  %zd\n", ft_write(-1, "toto", 4));
+	perror("ERRNO: ");
 	fd = open("ft_write_test", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	printf("	\x1b[34m[9]\x1b[0m \x1b[36m'open(\"ft_write_test\", O_WRONLY | O_TRUNC | O_CREAT)' '<whichlib.h> toto' '15'\x1b[0m\n");
 	write(fd, "<unistd.h> toto", 15);
